@@ -7,11 +7,7 @@ const port = 8888;
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
-const REDIRECT_URI = process.env.CLIENT_URI;
-
-app.get("/", (res, req) => {
-  res.send("Hello World");
-});
+const REDIRECT_URI = process.env.REDIRECT_URI;
 
 /**
  * Generates a random string containing numbers and letters
@@ -29,6 +25,10 @@ const generateRandomString = (length) => {
 };
 
 const stateKey = "spotify_auth_state";
+
+app.get("/", (res, req) => {
+  res.send("Hello World");
+});
 
 app.get("/login", (req, res) => {
   const state = generateRandomString(16);
@@ -68,6 +68,8 @@ app.get("/callback", (req, res) => {
     .then((response) => {
       if (response.status === 200) {
         const { access_token, token_type } = response.data;
+
+        const { refresh_token } = response.data;
 
         axios
           .get(
