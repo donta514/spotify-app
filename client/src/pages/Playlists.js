@@ -49,7 +49,7 @@ const Playlists = () => {
     <main>
       <SectionWrapper title="Public Playlists" breadcrumb={true}>
         {playlists && <PlaylistsGrid playlists={playlists} />}
-        <Loader />
+        {/* <Loader /> */}
       </SectionWrapper>
     </main>
   );

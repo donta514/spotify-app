@@ -30,7 +30,7 @@ const TopTracks = () => {
         />
 
         {topTracks && topTracks.items && <TrackList tracks={topTracks.items} />}
-        <Loader />
+        {/* <Loader /> */}
       </SectionWrapper>
     </main>
   );
