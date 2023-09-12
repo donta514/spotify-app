@@ -42,6 +42,7 @@ const StyledHeader = styled.header`
   img.header__img {
     width: 20%;
     max-width: 250px;
+    max-height: 250px;
     min-width: 120px;
     margin-right: var(--spacing-lg);
     box-shadow: 0 4px 60px rgb(0 0 0 / 50%);
