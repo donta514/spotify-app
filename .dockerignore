@@ -1,9 +1,8 @@
-.git
 node_modules
-npm-debug
+client/node_modules
+.git
 .gitignore
-.env
-.eslintrc.js
 .dockerignore
+Dockerfile
 README.md
 *.log
