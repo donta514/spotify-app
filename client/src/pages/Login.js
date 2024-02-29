@@ -45,7 +45,7 @@ const StyledAppleButton = styled.a`
 const LOGIN_URI =
   process.env.NODE_ENV !== "production"
     ? "http://localhost:8888/login"
-    : "https://spotify-pwa-004ff9d97fbe.herokuapp.com/login";
+    : "/login";
 
 const Login = () => (
   <StyledLoginContainer>

@@ -14,7 +14,8 @@
     "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "server": "nodemon index.js",
     "client": "cd client && npm start",
-    "start-server": "node index.js"
+    "start-server": "node index.js",
+    "build:ui": "rm -rf build && cd ./client/ && npm run build --prod && cp -r build/ .."
   },
   "keywords": [],
   "author": "",

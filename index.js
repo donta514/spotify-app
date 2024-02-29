@@ -10,8 +10,11 @@ const REDIRECT_URI = process.env.REDIRECT_URI;
 const FRONTEND_URI = process.env.FRONTEND_URI;
 const PORT = process.env.PORT || 8888;
 
+const rootRouter = express.Router();
+
+
 // Priority serve any static files.
-app.use(express.static(path.resolve(__dirname, "./client/build")));
+// app.use(express.static(path.resolve(__dirname, "./client/build")));
 
 /**
  * Generates a random string containing numbers and letters
@@ -30,9 +33,7 @@ const generateRandomString = (length) => {
 
 const stateKey = "spotify_auth_state";
 
-app.get("/", (res, req) => {
-  res.send("Hello World");
-});
+app.use("/", express.static("./build"));
 
 app.get("/login", (req, res) => {
   const state = generateRandomString(16);
@@ -117,9 +118,17 @@ app.get("/refresh_token", (req, res) => {
 });
 
 // All remaining requests return the React app, so it can handle routing.
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+
+// app.get("*", (req, res) => {
+//   res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+// });
+const buildPath = "./build";
+
+rootRouter.get("(/*)?", async (req, res, next) => {
+  // res.sendFile(path.join(buildPath, 'index.html'));
+  res.sendFile("index.html", { root: buildPath });
 });
+app.use(rootRouter);
 
 app.listen(PORT, () => {
   console.log(`Express backend listening on port ${PORT}`);
