@@ -49,9 +49,9 @@ const LOGIN_URI =
 
 const Login = () => (
   <StyledLoginContainer>
-    <StyledAppleButton href="https://music.apple.com/us/browse">
+    {/* <StyledAppleButton href="https://music.apple.com/us/browse">
       Log in to Apple Music
-    </StyledAppleButton>
+    </StyledAppleButton> */}
     <StyledLoginButton href={LOGIN_URI}>Log in to Spotify</StyledLoginButton>
   </StyledLoginContainer>
 );
