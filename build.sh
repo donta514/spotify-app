@@ -5,7 +5,7 @@ current_dir=/home/donta/spotify-app
 echo "Current directory: $current_dir"
 # cd $current_dir
 # git pull
-# git -C $current_dir pull
+git -C $current_dir pull
 
 source /home/donta/.nvm/nvm.sh
 nvm use 18.19.0

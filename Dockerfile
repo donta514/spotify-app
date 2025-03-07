@@ -1,23 +1,21 @@
-# Dockerfile
-# Use the official Node.js 18 as a parent image
+# Dockerfile for backend
 FROM node:18.19.0
 
-RUN mkdir -p /server/node_modules && chown -R node:node /server
-
-
-# Set the working directory in the container
-WORKDIR /server
+# Set the working directory
+WORKDIR /app
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
-USER node
-
+# Install dependencies
 RUN npm ci
 
-COPY --chown=node:node . .
+# Copy the rest of the app's code
+COPY . .
 
+# Expose port 8888 for the backend
 EXPOSE 8888
 
-# Command to run the app
+# Command to start the server (no build needed)
 CMD ["npm", "run", "start-server"]
+

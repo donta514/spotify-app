@@ -1,4 +1,5 @@
-version: '3.8'
+version: '3.3'
+
 services:
   backend:
     build: .
@@ -6,12 +7,22 @@ services:
       - "8888:8888"
     env_file:
       - .env
-    # volumes:
-      # - .:/server
-      # - /server/node_modules
+    networks:
+      - app-network
+
   frontend:
     build: ./client
-    ports:
-      - "3000:3000"
+    volumes:
+      - frontend_build:/var/www/spotify-app/client/build
     depends_on:
       - backend
+    networks:
+      - app-network
+
+volumes:
+  frontend_build:
+
+networks:
+  app-network:
+    driver: bridge
+

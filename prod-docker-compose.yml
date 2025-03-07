@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.3'
 services:
   webserver:
     image: nginx:mainline-alpine
@@ -7,16 +7,15 @@ services:
     ports:
       - "80:80"
       - "443:443"
-
     volumes:
       - web-root:/var/www/html
       - ./nginx-conf:/etc/nginx/conf.d
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
       - dhparam:/etc/ssl/certs
-
     depends_on:
       - backend
+      - frontend
     networks:
       - app-network
 
@@ -29,14 +28,28 @@ services:
       - web-root:/var/www/html
     depends_on:
       - webserver
-    command: certonly --webroot --webroot-path=/var/www/html --email dnovsmith.ds20@gmail.com --agree-tos --no-eff-email --force-renewal -d dontasmith.com  -d www.dontasmith.com
+    command: certonly --webroot --webroot-path=/var/www/html --email dnovsmith.ds20@gmail.com --agree-tos --no-eff-email --force-renewal -d dontasmith.com -d www.dontasmith.com
 
   backend:
     build: .
+    restart: unless-stopped  # Ensures backend auto-restarts
     ports:
       - "8888:8888"
     env_file:
       - .env
+    networks:
+      - app-network
+    environment:
+      - NODE_ENV=production
+
+  frontend:
+    build: ./client
+    volumes:
+      - web-root:/var/www/html  # Correctly map frontend build files
+    depends_on:
+      - backend
+    environment:
+      - DISABLE_HOST_CHECK=true
     networks:
       - app-network
 
@@ -47,7 +60,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/donta/spotify-app/build/
+      device: /var/www/html
       o: bind
   dhparam:
     driver: local
@@ -59,3 +72,4 @@ volumes:
 networks:
   app-network:
     driver: bridge
+
